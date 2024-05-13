@@ -4,23 +4,23 @@
  */
 
 #include "mbed.h"
+#include "Tic.hpp"
+#include <cstdio>
 
 
-// Blinking rate in milliseconds
-#define BLINKING_RATE     500ms
-
-
+TicT500 tic;
 int main()
 {
-    // Initialise the digital pin LED1 as an output
-#ifdef LED1
-    DigitalOut led(LED1);
-#else
-    bool led;
-#endif
+printf("Start testbench \n\r");
 
     while (true) {
-        led = !led;
-        ThisThread::sleep_for(BLINKING_RATE);
+
+        tic.energize();
+        tic.setTargetVelocity(1000000);
+        
+        ThisThread::sleep_for(10000ms);
+        //tic.deenergize();
+        tic.haltAndHold();
+        ThisThread::sleep_for(5000ms);
     }
 }
